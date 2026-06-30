@@ -45,48 +45,74 @@ File principali:
 
 ## `rag_informative`
 
-Questa cartella contiene il codice per un servizio informativo avanzato e multi-funzione, con funzioni di indicizzazione, estrazione da PDF, ricerca Google, sintesi vocale e servizi API.
+Questa cartella contiene il codice per un servizio informativo avanzato e multi-funzione, con funzioni di indicizzazione, estrazione da PDF, ricerca esterna, sintesi vocale e servizi API.
 
 File principali:
 
 - `Dockerfile` / `Dockerfile2`
   - Contengono istruzioni per creare l'immagine Docker del servizio informativo.
   - Installano dipendenze di sistema audio e Python.
-  - Copiano il codice sorgente e avviano il servizio principale.
+  - Copiano il codice sorgente e preparano l'ambiente per l'esecuzione del servizio.
 
 - `advance_indexing.py`
   - Gestisce l'indicizzazione avanzata dei contenuti.
-  - Supporta la creazione o l'aggiornamento di indici per il retrieval.
+  - Supporta la creazione o l'aggiornamento di indici di ricerca per retrieval più efficaci.
 
 - `extract_pdf.py`
   - Estrae testo dai file PDF.
   - Trasforma documenti PDF in contenuti testuali utilizzabili per ricerca e indicizzazione.
 
 - `google_search.py`
-  - Integrazione per eseguire ricerche su Google.
-  - Recupera informazioni esterne per arricchire le risposte.
+  - Effettua ricerche su Google per recuperare informazioni aggiornate dal web.
+  - Aiuta ad arricchire le risposte con contenuto esterno.
 
 - `lang2_search.py`
-  - Gestisce ricerche multilingua o query in varie lingue.
-  - Supporta il recupero di informazioni in diverse lingue.
+  - Gestisce ricerche multilingua o query in lingue diverse.
+  - Serve per recuperare informazioni utili in italiano, inglese e altre lingue.
 
 - `streaming_tts.py`
   - Componente di sintesi vocale in streaming.
   - Genera audio da testo e supporta la riproduzione in real time.
 
+- `guardrails/`
+  - Cartella che implementa filtri di sicurezza e classificazione dei prompt.
+  - Contiene moduli per valutare se una richiesta è `accepted` o `rejected` in base a regole di sicurezza.
+
+- `guardrails/guardrails_llama3.py`
+  - Implementa guardrails con un modello Llama 3.
+  - Definisce prompt di sistema, regole di blocco, esempi tossici e non tossici e output XML.
+  - Utilizza quantizzazione 4-bit e inferenza su GPU.
+
+- `guardrails/guardrails_llm.py`
+  - Versione alternativa del modulo guardrails basata su LLM e Transformers.
+  - Fornisce stessa logica di classificazione dei prompt e gestione risorse.
+
 - `uninettuno_interogation.py`
   - Applicazione principale del servizio informativo.
-  - Definisce endpoint API per assistente, browser, audio, TTS, raccomandazioni e sommario.
+  - Definisce endpoint API per assistente, browsing, audio, TTS, raccomandazioni e sommario.
 
 - `utils.py`
   - Contiene funzioni di utilità condivise.
   - Supporta operazioni generiche di parsing, formattazione e gestione dati.
 
 - `readme.md`
-  - Fornisce istruzioni pratiche per installazione, deploy e uso del servizio.
+  - Guida dettagliata per l'installazione, la configurazione dell'ambiente virtuale, la costruzione dell'immagine Docker e il deploy.
+  - Include istruzioni per il push su AWS ECR e note di deploy su Azure.
 
 - `requirements.txt`
   - Elenca le dipendenze Python necessarie per il servizio informativo.
+  - Contiene pacchetti per audio, ricerca e integrazione con servizi esterni.
+
+- `speech.mp3`
+  - File di esempio audio associato al progetto.
+
+## Aggiornamenti recenti in `rag_informative`
+
+- Aggiunta e miglioramento di endpoint API per interazione vocale e testuale.
+- Supporto esteso per ricerca esterna e indicizzazione avanzata.
+- Integrazione della sintesi vocale in streaming con file audio generati dinamicamente.
+- Documentazione di deploy Docker aggiornata con istruzioni per AWS ECR.
+- Stabilizzazione del servizio `uninettuno_interogation.py` come entrypoint principale per il progetto.
 
 ## Contesto generale
 

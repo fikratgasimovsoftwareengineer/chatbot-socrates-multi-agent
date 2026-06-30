@@ -2,9 +2,6 @@ from langchain_core.tools import Tool
 from langchain_google_community import GoogleSearchAPIWrapper
 import os
 
-os.environ["GOOGLE_CSE_ID"] = "85a9a9e87e31149de"
-os.environ["GOOGLE_API_KEY"] = "AIzaSyBtcTXgTR0IJ_uWd42xNZXn63GDwsAbfWU"
-
 def search_langchain(query):
 
     try:

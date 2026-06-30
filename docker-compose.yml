@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  rag_informative:
+    build:
+      context: ./rag_informative
+    container_name: socrates_rag_informative
+    ports:
+      - "5000:5000"
+    restart: always

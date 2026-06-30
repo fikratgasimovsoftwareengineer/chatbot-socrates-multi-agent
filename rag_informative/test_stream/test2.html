@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streaming Assistant</title>
+</head>
+<body>
+    <h1>Ask the Uninettuno Assistant</h1>
+    <input type="text" id="question" placeholder="Type your question here" />
+    <button onclick="askQuestion()">Ask</button>
+    <br><br>
+    <textarea id="response" rows="15" cols="80" readonly></textarea>
+
+    <script>
+        async function askQuestion() {
+    const question = document.getElementById('question').value;
+    const responseElement = document.getElementById('response');
+    responseElement.value = ""; // Clear the previous response
+
+    try {
+        const response = await fetch('http://127.0.0.1:5000/uninettuno_assistant', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ question })
+        });
+
+        if (!response.ok) {
+            responseElement.value = "Error: Unable to get a response from the server.";
+            return;
+        }
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let partialResult = "";
+
+        while (true) {
+            const { value, done } = await reader.read();
+            if (done) break; // Stop when the stream ends
+
+            const chunk = decoder.decode(value, { stream: true });
+            console.log("Received chunk:", chunk); // Log each chunk
+            partialResult += chunk;
+            responseElement.value = partialResult;
+            responseElement.scrollTop = responseElement.scrollHeight; // Scroll to the bottom
+        }
+    } catch (error) {
+        responseElement.value = `Error: ${error.message}`;
+    }
+}
+
+
+    </script>
+</body>
+</html>
+

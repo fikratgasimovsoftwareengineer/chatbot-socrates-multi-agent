@@ -1,0 +1,9 @@
+openai
+Flask
+requests
+Flask-Cors
+azure-search-documents
+psycopg2-binary
+python-dotenv
+regex
+gunicorn
